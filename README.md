@@ -3,8 +3,7 @@ A really simple messaging and command dispatch centre.
 
 ## Usage guide
 
-Import Core.js, as a module or as a plain script file. This will instantiate a singleton class (you can access
-this later on through the window.\__\__core\__\__ reference).
+``npm i @mm83/core``
 
 This library aims to provide a single, central point through which your whole application can communicate without breaking
 data encapsulation, or any existing design pattern. It can be used to implement anything from a simple message dispatcher
