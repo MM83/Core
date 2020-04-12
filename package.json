@@ -1,0 +1,20 @@
+{
+  "name": "@mm83/core",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MM83/Core.git"
+  },
+  "keywords": ["Crux", "Core", "MVC", "messaging", "event", "dispatch", "controller"],
+  "author": "Nick Stone",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MM83/Core/issues"
+  },
+  "homepage": "https://github.com/MM83/Core#readme"
+}

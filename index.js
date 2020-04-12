@@ -1,11 +1,9 @@
 
-export default window.__core__ || new function Core(){
+function Core(){
 
 	let cmds = {}, handlers = {};
 	let flagHandlers = {};
 	let onces = [], flags = {};
-
-	let id = Math.round(Math.random()*999999);
 
 	let self = this;
 
@@ -21,8 +19,6 @@ export default window.__core__ || new function Core(){
 		flags[name] = !!value;
 
 	}
-
-	self.setFlag("staging", false);
 
 	self.getFlag = function(name, value)
 	{
@@ -59,6 +55,18 @@ export default window.__core__ || new function Core(){
 	};
 
 	self.addFlagListener = function (flag, handler) {
+		(flagHandlers[flag] = flagHandlers[flag] || []).push(handler);
+	};
+
+	self.addOnceFlagListener = function (flag, handler) {
+		(flagOnceHandlers[flag] = flagOnceHandlers[flag] || []).push(handler);
+	};
+
+	self.removeFlagListener = function (flag, handler) {
+		(flagHandlers[flag] = flagHandlers[flag] || []).push(handler);
+	};
+
+	self.removeOnceFlagListener = function (flag, handler) {
 		(flagHandlers[flag] = flagHandlers[flag] || []).push(handler);
 	};
 
@@ -117,7 +125,17 @@ export default window.__core__ || new function Core(){
 		arr.splice(index, 1);
 	};
 
-	self.query = function(name, data, handler){
+	self.retractOnce = function(name, handler){
+		var arr = onceResponces[name];
+		if(!arr)
+			return;
+		var index = arr.indexOf(handler);
+		if(index == -1)
+			return;
+		arr.splice(index, 1);
+	};
+
+	self.query = function(name, data){
 		var resp = responses[name];
 		var ret = [];
 		if(resp)
@@ -130,33 +148,16 @@ export default window.__core__ || new function Core(){
 					onceResponces.splice(j, 1);
 				}
 			}
-		if(handler)
-			handler(ret);
-		return ret[0];
+		if(ret.length == 1)
+			return ret[0];
+		return ret;
 	};
-
-	window.__core__ = this;
 
 	self.listAllCommands = function(){
 		for(var i in cmds)
 			console.log(i);
 	};
 
-	self.respond("get-url-vars", ()=>{
-		let search = window.location.hash.split("?")[1];
-		if(!search)
-			return {};
-		search = search.split("&");
-		let params = {};
-		for(let i = 0; i < search.length; ++i)
-		{
-			let pArr = search[i].split("=");
-			params[pArr[0]] = pArr[1];
-		}
-		return params;
-	});
-
-
-
-
 };
+
+exports.Core = new Core();
